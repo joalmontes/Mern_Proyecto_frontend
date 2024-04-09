@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
+import ProductLayout from './products/components/productLayout';
 import reportWebVitals from './reportWebVitals';
+import 'bulma/css/bulma.min.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <ProductLayout />
   </React.StrictMode>
 );
 
