@@ -1,14 +1,14 @@
 import React from "react";
 import Header from './Header'
 import AddButton from "./AddButton";
-import Loading  from "./Loading";
+import ListProduct from "./ListProducts";
 
 const ProductLayout = () =>{
     return(
         <>
             <Header title="products app"/>
             <AddButton/>
-            <Loading/>
+            <ListProduct/>
         </>
         
     )  

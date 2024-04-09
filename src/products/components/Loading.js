@@ -9,7 +9,6 @@ const Loading = () => {
                 height: 100
             }} />
         </div>
-
     )
 }
 
