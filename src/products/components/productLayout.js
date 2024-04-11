@@ -42,8 +42,7 @@ const ProductLayout = () =>{
                 isLoading &&  <Loading />
             }
             {
-                !products.length && <h2 className='titles has-text-centered'>no hay productos disponible</h2>
-            
+                /*!products.length && <h2 className='titles has-text-centered'>no hay productos disponible</h2>*/            
             }
             <ListProduct products={products}/>
 
