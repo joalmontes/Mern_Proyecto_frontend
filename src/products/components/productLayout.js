@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Modal } from 'react-bulma-components'
+import { Modal, Container } from 'react-bulma-components'
 import Header from './Header'
 import AddButton from "./AddButton";
 import ListProduct from "./ListProducts";
@@ -13,6 +13,7 @@ const ProductLayout = () =>{
     const [isLoading, setIsLoading] = useState(true)
     const [products, setProducts] = useState([]);
     
+    console.log(products)
 
     async function loadProduct() {
         const response = await getProducts()
@@ -33,10 +34,11 @@ const ProductLayout = () =>{
     const handleSubmit = async (data) =>{
         await saveProduct(data)
         loadProduct()
+        SetIsModalOpen(false)
     }
     
     return(
-        <>
+        <Container>
             <Header title="products app"/>
             <AddButton onClick={() =>SetIsModalOpen(true)} />
             {
@@ -47,6 +49,7 @@ const ProductLayout = () =>{
             }
             {
                 !isLoading && products.length>0 && (<ListProduct products={products}/>)
+                
             }
             
 
@@ -64,7 +67,7 @@ const ProductLayout = () =>{
                     </Modal.Card>
                 </Modal.Content>    
             </Modal>
-        </>
+        </Container>
         
     )  
 }
