@@ -26,30 +26,37 @@ const Form = ({ handleSubmit }) =>{
     return (
         <form onSubmit={_handleSubmit}>
             <Field>
-                <Label>name</Label>
+                <Label>nombre_funcionario</Label>
                 <Control>
-                    <Input placeholder="Text Input" name="name" value={formValues.name} onChange={handleChange} />
+                    <Input placeholder="Text Input" name="nombre_funcionario" value={formValues.nombre_funcionario} onChange={handleChange} />
                 </Control>
             </Field>
 
             <Field>
-                <Label>priceUnitary</Label>
+                <Label>aparato</Label>
                 <Control>
-                    <Input placeholder="Text Input" name="priceUnitary" value={formValues.priceUnitary} onChange={handleChange} type="number"/>
+                    <Input placeholder="Text Input" name="aparato" value={formValues.aparato} onChange={handleChange}/>
                 </Control>
             </Field>
 
             <Field>
-                <Label>size</Label>
+                <Label>numero</Label>
                 <Control>
-                    <Input placeholder="Text Input" name="size" value={formValues.size} onChange={handleChange} type="number"/>
+                    <Input placeholder="Text Input" name="numero" value={formValues.numero} onChange={handleChange} type="number"/>
                 </Control>
             </Field>
 
             <Field>
-                <Label>description</Label>
+                <Label>lugar_donde</Label>
                 <Control>
-                    <Input placeholder="Text Input" name="description" value={formValues.description} onChange={handleChange}/>
+                    <Input placeholder="Text Input" name="lugar_donde" value={formValues.lugar_donde} onChange={handleChange}/>
+                </Control>
+            </Field>
+
+            <Field>
+                <Label>fecha_entrega</Label>
+                <Control>
+                    <Input placeholder="Text Input" name="fecha_entrega" value={formValues.fecha_entrega} onChange={handleChange} type="date" />
                 </Control>
             </Field>
 
