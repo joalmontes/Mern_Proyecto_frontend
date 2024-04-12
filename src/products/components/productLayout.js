@@ -13,9 +13,10 @@ const ProductLayout = () =>{
     const [isLoading, setIsLoading] = useState(true)
     const [products, setProducts] = useState([]);
     
-    
+
     async function loadProduct() {
         const response = await getProducts()
+
 
         if (response.status === 200) {
             setProducts(response.data.products)
@@ -42,9 +43,12 @@ const ProductLayout = () =>{
                 isLoading &&  <Loading />
             }
             {
-                /*!products.length && <h2 className='titles has-text-centered'>no hay productos disponible</h2>*/            
+                !isLoading && !products.length && (<h2 className='titles has-text-centered'>no hay productos disponible</h2>)         
             }
-            <ListProduct products={products}/>
+            {
+                !isLoading && products.length>0 && (<ListProduct products={products}/>)
+            }
+            
 
             <Modal show={isModalOpen} onClose={() => SetIsModalOpen(false) }>
                 <Modal.Content>

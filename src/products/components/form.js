@@ -11,7 +11,6 @@ const Form = ({ handleSubmit }) =>{
         size:'',
         description:'',
     })
-    const inputFileRef = useRef()
 
     const handleChange = (event) =>{
         const {name, value} = event.target
@@ -20,9 +19,9 @@ const Form = ({ handleSubmit }) =>{
     }
     const _handleSubmit = (e) =>{
         e.preventDefault()
-        handleSubmit({...formValues, Image: inputFileRef.current.files[0]})
+        handleSubmit({...formValues})
         console.log(formValues)
-        console.log(inputFileRef.current.files)
+
     }
     return (
         <form onSubmit={_handleSubmit}>
@@ -51,13 +50,6 @@ const Form = ({ handleSubmit }) =>{
                 <Label>description</Label>
                 <Control>
                     <Input placeholder="Text Input" name="description" value={formValues.description} onChange={handleChange}/>
-                </Control>
-            </Field>
-
-            <Field>
-                <Label>imagen</Label>
-                <Control>
-                    <input type="file" ref={inputFileRef}/>
                 </Control>
             </Field>
 
