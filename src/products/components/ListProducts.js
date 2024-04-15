@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, Columns, Content, Heading } from 'react-bulma-components'
+import { deleteProduct } from '../sevices';
 
 const ListProduct = ({ products }) => {
 
@@ -14,6 +15,7 @@ const ListProduct = ({ products }) => {
         return date.toLocaleDateString('es-ES', options);
     };
 
+    
     return (
         <Columns>
             {
@@ -34,6 +36,9 @@ const ListProduct = ({ products }) => {
                                     <p>
                                         Lugar dode debe estar: {lugar_donde}
                                     </p>
+                                    <button onClick={() => deleteProduct(_id)}>
+                                        entregado
+                                    </button>
                                 </Content>
                             </Card.Content>
                         </Card>

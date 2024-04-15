@@ -16,20 +16,6 @@ export async function getProducts(){
     }
 }
 
-export async function getFuncionario(){
-    try {
-        const response = await axios({
-            url: `${baseUrl}/funcionario`,
-            method:'get'
-        })
-
-        return response
-    } catch (e) {
-        console.log(e)
-    }
-}
-
-
 export async function saveProduct(productData){
     try {
         const formData = new FormData()
@@ -45,6 +31,34 @@ export async function saveProduct(productData){
             method:'post', 
             data: formData
         })
+        return response
+    } catch (e) {
+        console.log(e)
+    }
+}
+export async function deleteProduct(_id){
+    try {
+        const response = await axios({
+            url: `${baseUrl}/products/${_id}`,
+            method:'delete', 
+        })
+        return response
+        
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+
+
+export async function getFuncionario(){
+    try {
+        const response = await axios({
+            url: `${baseUrl}/funcionario`,
+            method:'get'
+        })
+
         return response
     } catch (e) {
         console.log(e)
