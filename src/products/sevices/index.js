@@ -16,6 +16,20 @@ export async function getProducts(){
     }
 }
 
+export async function getFuncionario(){
+    try {
+        const response = await axios({
+            url: `${baseUrl}/funcionario`,
+            method:'get'
+        })
+
+        return response
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+
 export async function saveProduct(productData){
     try {
         const formData = new FormData()
@@ -31,6 +45,28 @@ export async function saveProduct(productData){
             method:'post', 
             data: formData
         })
+        return response
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+export async function saveFuncionario(funcionarioData){
+    console.log(funcionarioData)
+    try {
+        const formData = new FormData()
+        formData.append('nombre_Apellido', funcionarioData.nombre_Apellido )
+        formData.append('cargo', funcionarioData.cargo )
+
+        const response = await axios({
+            url: `${baseUrl}/funcionario`,
+            method:'POST', 
+            data: formData
+            
+        })
+        
+        console.log(response)
+
         return response
     } catch (e) {
         console.log(e)
