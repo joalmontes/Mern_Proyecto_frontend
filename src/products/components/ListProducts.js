@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Card, Columns, Content, Heading } from 'react-bulma-components'
-import { deleteProduct } from '../sevices'
+import { deleteProduct, saveHistorial } from '../sevices'
 import FormHistorial from './formHistorial';
 import { Modal} from 'react-bulma-components'
 import ButtonHistorial from './ButtonHistorial';
@@ -26,6 +26,11 @@ const ListProduct = ({ products }) => {
         setIsModalOpen2(true);
     };
 
+    const handleSubmit = async (data) =>{
+        await saveHistorial(data)
+        setIsModalOpen2(false)
+    }
+
     return (
         <Columns>
             {products.map(({ nombre_funcionario, aparato, numero, lugar_donde, fecha_entrega, _id, createdAt }) => (
@@ -37,7 +42,7 @@ const ListProduct = ({ products }) => {
                                 <Heading subtitle size={6}> Aparato: {aparato} {numero}</Heading>
                                 <Heading subtitle size={6}> Fecha de prestamo: {formatDate(createdAt)}</Heading>
                                 <p>Fecha de entrega: {formatDate2(fecha_entrega)}</p>
-                                <p>Lugar dode debe estar: {lugar_donde}</p>
+                                <p>Lugar donde debe estar: {lugar_donde}</p>
                                 <ButtonHistorial onClick={() => handleOpenModal({_id, aparato, createdAt})} />
                             </Content>
                         </Card.Content>
@@ -51,7 +56,7 @@ const ListProduct = ({ products }) => {
                             <Modal.Card.Title >historial</Modal.Card.Title>
                         </Modal.Card.Header>
                         <Modal.Card.Body>
-                            {selectedProduct && <FormHistorial product={selectedProduct} />}
+                            {selectedProduct && <FormHistorial product={selectedProduct} handleSubmit={handleSubmit}/>}
                         </Modal.Card.Body>
                     </Modal.Card>
                 </Modal.Content>

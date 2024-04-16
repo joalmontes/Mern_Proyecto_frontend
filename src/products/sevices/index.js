@@ -3,12 +3,22 @@ import  axios  from 'axios';
 
 const baseUrl = process.env.REACT_APP_BASE_URL
 
-export async function getProducts(){
+export async function saveHistorial(historialData){
+    console.log(historialData)
     try {
+        const formData = new FormData()
+        formData.append('aparato', historialData.aparato )
+        formData.append('mes', historialData.mes )
+        formData.append('anno', historialData.anno)
+
         const response = await axios({
-            url: `${baseUrl}/products`,
-            method:'get'
+            url: `${baseUrl}/historial`,
+            method:'post', 
+            data: formData
+            
         })
+        
+        console.log(response)
 
         return response
     } catch (e) {
@@ -31,34 +41,6 @@ export async function saveProduct(productData){
             method:'post', 
             data: formData
         })
-        return response
-    } catch (e) {
-        console.log(e)
-    }
-}
-
-export async function deleteProduct(_id){
-    try {
-        const response = await axios({
-            url: `${baseUrl}/products/${_id}`,
-            method:'delete', 
-        })
-        return response
-        
-    } catch (error) {
-        console.log(error)
-    }
-}
-
-
-
-export async function getFuncionario(){
-    try {
-        const response = await axios({
-            url: `${baseUrl}/funcionario`,
-            method:'get'
-        })
-
         return response
     } catch (e) {
         console.log(e)
@@ -88,23 +70,27 @@ export async function saveFuncionario(funcionarioData){
 }
 
 
-
-export async function saveHistorial(historialData){
-    console.log(historialData)
+export async function deleteProduct(_id){
     try {
-        const formData = new FormData()
-        formData.append('aparato', historialData.aparato )
-        formData.append('mes', historialData.mes )
-        formData.append('anno', historialData.anno)
-
         const response = await axios({
-            url: `${baseUrl}/historial`,
-            method:'post', 
-            data: formData
-            
+            url: `${baseUrl}/products/${_id}`,
+            method:'delete', 
         })
+        return response
         
-        console.log(response)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+
+export async function getFuncionario(){
+    try {
+        const response = await axios({
+            url: `${baseUrl}/funcionario`,
+            method:'get'
+        })
 
         return response
     } catch (e) {
@@ -112,10 +98,23 @@ export async function saveHistorial(historialData){
     }
 }
 
-export async function gethistorial(){
+export async function getHistorial(){
     try {
         const response = await axios({
-            url: `${baseUrl}/historial`,
+            url: `${baseUrl}/Historial`,
+            method:'get'
+        })
+
+        return response
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+export async function getProducts(){
+    try {
+        const response = await axios({
+            url: `${baseUrl}/products`,
             method:'get'
         })
 

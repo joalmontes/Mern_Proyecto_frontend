@@ -3,7 +3,7 @@ import { Form as BulmaForm, Button } from 'react-bulma-components'
 
 const { Field, Control, Label, Input } = BulmaForm;
 
-const FormHistorial = ({ handleSubmit1, product }) => {
+const FormHistorial = ({ handleSubmit, product }) => {
     const [formValues, setFormValues] = useState({
         aparato: '',
         mes: '',
@@ -29,7 +29,7 @@ const FormHistorial = ({ handleSubmit1, product }) => {
 
     const _handleSubmit = (e) => {
         e.preventDefault();
-        handleSubmit1({ ...formValues });
+        handleSubmit({ ...formValues });
         console.log(formValues);
     };
 

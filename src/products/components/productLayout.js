@@ -104,7 +104,6 @@ const ProductLayout = () =>{
                 </Modal.Content>    
             </Modal>
 
-
         </Container>
         
     )  
