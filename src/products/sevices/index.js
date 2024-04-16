@@ -3,26 +3,14 @@ import  axios  from 'axios';
 
 const baseUrl = process.env.REACT_APP_BASE_URL
 
+
 export async function saveHistorial(historialData){
-    console.log(historialData)
     try {
-        const formData = new FormData()
-        formData.append('aparato', historialData.aparato )
-        formData.append('mes', historialData.mes )
-        formData.append('anno', historialData.anno)
-
-        const response = await axios({
-            url: `${baseUrl}/historial`,
-            method:'post', 
-            data: formData
-            
-        })
-        
-        console.log(response)
-
-        return response
+        const response = await axios.post(`${baseUrl}/historial`, historialData);
+        return response;
     } catch (e) {
-        console.log(e)
+        console.error('Error al guardar historial:', e);
+        throw e; 
     }
 }
 
@@ -48,24 +36,12 @@ export async function saveProduct(productData){
 }
 
 export async function saveFuncionario(funcionarioData){
-    console.log(funcionarioData)
     try {
-        const formData = new FormData()
-        formData.append('nombre_Apellido', funcionarioData.nombre_Apellido )
-        formData.append('cargo', funcionarioData.cargo )
-
-        const response = await axios({
-            url: `${baseUrl}/funcionario`,
-            method:'post', 
-            data: formData
-            
-        })
-        
-        console.log(response)
-
-        return response
-    } catch (e) {
-        console.log(e)
+        const response = await axios.post(`${baseUrl}/funcionario`, funcionarioData);
+        return response;
+    } catch (error) {
+        console.error('Error al guardar funcionario:', error);
+        throw error; 
     }
 }
 

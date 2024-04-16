@@ -6,7 +6,7 @@ import AddButton1 from "./AddButton1";
 import ListProduct from "./ListProducts";
 import Form from "./form";
 import FormFuncionario from "./formFuncionarios";
-import { saveProduct, getProducts, saveFuncionario, getFuncionario } from "../sevices"
+import { saveProduct, getProducts, saveFuncionario, getFuncionario, getHistorial } from "../sevices"
 import Loading from './Loading';
 
 
@@ -16,10 +16,24 @@ const ProductLayout = () =>{
     const [isLoading, setIsLoading] = useState(true)
     const [products, setProducts] = useState([])
     const [funcionarios, setFuncionarios]= useState([])
+    const [historial, setHistorial] = useState([])
 
     console.log(funcionarios)
     console.log(products)
+    console.log(historial)
 
+    async function loadHistorial(){
+        const response = await getHistorial()
+        if(response.status === 200){
+            setHistorial(response.data.historial)
+        }
+    }
+
+    function countByAparato(aparato) {
+        return historial.filter(item => item.aparato === aparato).length;
+    }
+
+    
     async function loadProduct() {
         const response = await getProducts()
 
@@ -42,6 +56,7 @@ const ProductLayout = () =>{
     useEffect(() => {
         loadFuncionario()
         loadProduct()
+        loadHistorial()
     }, [])
     
     const handleSubmit = async (data) =>{
@@ -72,7 +87,14 @@ const ProductLayout = () =>{
                 !isLoading && products.length>0 && (<ListProduct products={products} /> )
                 
             }
-            
+            <h3>Total de elementos en historial: {historial.length}</h3>
+
+            <div>
+                <h3>total de paratos prestados en el año:</h3>
+                {Array.from(new Set(historial.map(item => item.aparato))).map(aparato => (
+                    <p key={aparato}>{aparato}: {countByAparato(aparato)}</p>
+                ))}
+            </div>
 
             <Modal show={isModalOpen} onClose={() => SetIsModalOpen(false) }>
                 <Modal.Content>
