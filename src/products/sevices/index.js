@@ -60,7 +60,6 @@ export async function deleteProduct(_id){
 }
 
 
-
 export async function getFuncionario(){
     try {
         const response = await axios({
