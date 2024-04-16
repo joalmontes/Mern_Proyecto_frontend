@@ -28,12 +28,11 @@ const ProductLayout = () =>{
             setHistorial(response.data.historial)
         }
     }
-
+    
     function countByAparato(aparato) {
         return historial.filter(item => item.aparato === aparato).length;
     }
 
-    
     async function loadProduct() {
         const response = await getProducts()
 

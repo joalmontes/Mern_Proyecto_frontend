@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, Columns, Content, Heading } from 'react-bulma-components'
-import { deleteProduct, saveHistorial } from '../sevices'
+import { saveHistorial } from '../sevices'
 import FormHistorial from './formHistorial';
-import { Modal} from 'react-bulma-components'
+import { Modal } from 'react-bulma-components'
 import ButtonHistorial from './ButtonHistorial';
 
 const ListProduct = ({ products }) => {
 
     const [isModalOpen2, setIsModalOpen2] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
+    const [reloadPage, setReloadPage] = useState(false); // Nuevo estado para recargar la página
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -26,10 +27,23 @@ const ListProduct = ({ products }) => {
         setIsModalOpen2(true);
     };
 
+    const handleCloseModal = () => {
+        setIsModalOpen2(false);
+        setReloadPage(true); 
+    };
+
     const handleSubmit = async (data) =>{
         await saveHistorial(data)
         setIsModalOpen2(false)
     }
+
+
+    useEffect(() => {
+        if (reloadPage) {
+            window.location.reload();
+            setReloadPage(false); 
+        }
+    }, [reloadPage]);
 
     return (
         <Columns>
@@ -43,20 +57,20 @@ const ListProduct = ({ products }) => {
                                 <Heading subtitle size={6}> Fecha de prestamo: {formatDate(createdAt)}</Heading>
                                 <p>Fecha de entrega: {formatDate2(fecha_entrega)}</p>
                                 <p>Lugar donde debe estar: {lugar_donde}</p>
-                                <ButtonHistorial onClick={() => handleOpenModal({_id, aparato, createdAt})} />
+                                <ButtonHistorial onClick={() => handleOpenModal({_id, aparato, createdAt})}/>
                             </Content>
                         </Card.Content>
                     </Card>
                 </Columns.Column>
             ))}
-            <Modal show={isModalOpen2} onClose={() => setIsModalOpen2(false)}>
+            <Modal show={isModalOpen2} onClose={handleCloseModal}>
                 <Modal.Content>
                     <Modal.Card>
                         <Modal.Card.Header showClose={false}>
                             <Modal.Card.Title >historial</Modal.Card.Title>
                         </Modal.Card.Header>
                         <Modal.Card.Body>
-                            {selectedProduct && <FormHistorial product={selectedProduct} handleSubmit={handleSubmit}/>}
+                            {selectedProduct && <FormHistorial product={selectedProduct} handleSubmit={handleSubmit} />}
                         </Modal.Card.Body>
                     </Modal.Card>
                 </Modal.Content>
@@ -66,4 +80,5 @@ const ListProduct = ({ products }) => {
 }
 
 export default ListProduct;
+
 

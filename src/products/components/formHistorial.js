@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Form as BulmaForm, Button } from 'react-bulma-components'
-
+import { deleteProduct } from "../sevices";
 const { Field, Control, Label, Input } = BulmaForm;
+
 
 const FormHistorial = ({ handleSubmit, product }) => {
     const [formValues, setFormValues] = useState({
@@ -27,10 +28,12 @@ const FormHistorial = ({ handleSubmit, product }) => {
         setFormValues({ ...formValues, [name]: value });
     };
 
-    const _handleSubmit = (e) => {
+    const _handleSubmit = async (e) => {
         e.preventDefault();
-        handleSubmit({ ...formValues });
+        await handleSubmit({ ...formValues });
         console.log(formValues);
+        await deleteProduct(product._id);
+        window.location.reload(); 
     };
 
     return (

@@ -45,7 +45,15 @@ export async function saveFuncionario(funcionarioData){
     }
 }
 
-
+export async function saveAparato(aparatoData){
+    try {
+        const response = await axios.post(`${baseUrl}/aparato`, aparatoData);
+        return response;
+    } catch (error) {
+        console.error('Error al guardar funcionario:', error);
+        throw error; 
+    }
+}
 export async function deleteProduct(_id){
     try {
         const response = await axios({
@@ -90,6 +98,19 @@ export async function getProducts(){
     try {
         const response = await axios({
             url: `${baseUrl}/products`,
+            method:'get'
+        })
+
+        return response
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+export async function getAparato(){
+    try {
+        const response = await axios({
+            url: `${baseUrl}/aparato`,
             method:'get'
         })
 

@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Form as BulmaForm, Button } from 'react-bulma-components'
 import { getFuncionario } from "../sevices";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import es from 'date-fns/locale/es';
 
 const { Field, Control, Label, Input } = BulmaForm
 
@@ -11,7 +14,7 @@ const Form = ({ handleSubmit }) => {
         aparato: '',
         numero: '',
         lugar_donde: '',
-        fecha_entrega: ''
+        fecha_entrega: new Date()
     })
 
     const [funcionarios, setFuncionarios] = useState([]);
@@ -32,6 +35,11 @@ const Form = ({ handleSubmit }) => {
 
         setFormValues({ ...formValues, [name]: value })
     }
+
+    const handleDateChange = (date) => {
+        setFormValues({ ...formValues, fecha_entrega: date });
+    };
+
     const _handleSubmit = (e) => {
         e.preventDefault()
         handleSubmit({ ...formValues })
@@ -52,7 +60,7 @@ const Form = ({ handleSubmit }) => {
                     />
                     <datalist id="funcionarios">
                         {funcionarios.map((funcionario, index) => (
-                            <option key={index} value={funcionario.nombre_Apellido} />
+                            <option key={index} value={funcionario.nombre_Apellido +' '+'('+ funcionario.cargo+')'} />
                         ))}
                     </datalist>
                 </Control>
@@ -82,7 +90,12 @@ const Form = ({ handleSubmit }) => {
             <Field>
                 <Label>fecha_entrega</Label>
                 <Control>
-                    <Input placeholder="Text Input" name="fecha_entrega" value={formValues.fecha_entrega} onChange={handleChange} type="date" />
+                    <DatePicker
+                        selected={formValues.fecha_entrega}
+                        onChange={handleDateChange}
+                        dateFormat="yyyy-MM-dd"
+                        locale={es}
+                    />
                 </Control>
             </Field>
 
@@ -92,4 +105,4 @@ const Form = ({ handleSubmit }) => {
     );
 }
 
-export default Form
+export default Form;
