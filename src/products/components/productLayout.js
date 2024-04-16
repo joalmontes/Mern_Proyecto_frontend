@@ -69,7 +69,7 @@ const ProductLayout = () =>{
                 !isLoading && !products.length && (<h2 className='titles has-text-centered'>no hay productos disponible</h2>)         
             }
             {
-                !isLoading && products.length>0 && (<ListProduct products={products}/>)
+                !isLoading && products.length>0 && (<ListProduct products={products} /> )
                 
             }
             
@@ -103,6 +103,8 @@ const ProductLayout = () =>{
                     </Modal.Card>
                 </Modal.Content>    
             </Modal>
+
+
         </Container>
         
     )  

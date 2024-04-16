@@ -36,6 +36,7 @@ export async function saveProduct(productData){
         console.log(e)
     }
 }
+
 export async function deleteProduct(_id){
     try {
         const response = await axios({
@@ -48,7 +49,6 @@ export async function deleteProduct(_id){
         console.log(error)
     }
 }
-
 
 
 
@@ -74,12 +74,50 @@ export async function saveFuncionario(funcionarioData){
 
         const response = await axios({
             url: `${baseUrl}/funcionario`,
-            method:'POST', 
+            method:'post', 
             data: formData
             
         })
         
         console.log(response)
+
+        return response
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+
+
+export async function saveHistorial(historialData){
+    console.log(historialData)
+    try {
+        const formData = new FormData()
+        formData.append('aparato', historialData.aparato )
+        formData.append('mes', historialData.mes )
+        formData.append('anno', historialData.anno)
+
+        const response = await axios({
+            url: `${baseUrl}/historial`,
+            method:'post', 
+            data: formData
+            
+        })
+        
+        console.log(response)
+
+        return response
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+export async function gethistorial(){
+    try {
+        const response = await axios({
+            url: `${baseUrl}/historial`,
+            method:'get'
+        })
 
         return response
     } catch (e) {
