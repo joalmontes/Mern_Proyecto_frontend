@@ -36,6 +36,12 @@ const FormFuncionario = ({ handleSubmit1 }) =>{
                     <Input placeholder="Text Input" name="cargo" value={formValues.cargo} onChange={handleChange}/>
                 </Control>
             </Field>
+            <Field>
+                <Label>correo</Label>
+                <Control>
+                    <Input placeholder="Text Input" name="correo" value={formValues.correo} onChange={handleChange}/>
+                </Control>
+            </Field>
 
             <Button type="submit">guardar</Button>
 
