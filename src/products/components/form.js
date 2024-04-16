@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Form as BulmaForm, Button } from 'react-bulma-components'
-import { getFuncionario } from "../sevices";
+import { getFuncionario, getAparato} from "../sevices";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import es from 'date-fns/locale/es';
@@ -18,6 +18,7 @@ const Form = ({ handleSubmit }) => {
     })
 
     const [funcionarios, setFuncionarios] = useState([]);
+    const [aparatos, setAparatos] = useState([])
 
     useEffect(() => {
         async function fetchFuncionarios() {
@@ -27,6 +28,14 @@ const Form = ({ handleSubmit }) => {
             }
         }
         fetchFuncionarios();
+
+        async function fetchaparato() {
+            const response = await getAparato();
+            if (response.status === 200) {
+                setAparatos(response.data.aparato);
+            }
+        }
+        fetchaparato();
     }, []);
 
 
@@ -60,7 +69,7 @@ const Form = ({ handleSubmit }) => {
                     />
                     <datalist id="funcionarios">
                         {funcionarios.map((funcionario, index) => (
-                            <option key={index} value={funcionario.nombre_Apellido +' '+'('+ funcionario.cargo+')'} />
+                            <option key={index} value={funcionario.nombre_Apellido + ' ' + '(' + funcionario.cargo + ')'} />
                         ))}
                     </datalist>
                 </Control>
@@ -69,7 +78,18 @@ const Form = ({ handleSubmit }) => {
             <Field>
                 <Label>aparato</Label>
                 <Control>
-                    <Input placeholder="Text Input" name="aparato" value={formValues.aparato} onChange={handleChange} />
+                    <Input
+                        list="aparatos"
+                        placeholder="Selecciona un aparato"
+                        name="aparato"
+                        value={formValues.aparato}
+                        onChange={handleChange}
+                    />
+                    <datalist id="aparatos">
+                        {aparatos.map((aparato, index) => (
+                            <option key={index} value={aparato.dispositivo + ' '+ '('+aparato.modelo + ')' } />
+                        ))}
+                    </datalist>
                 </Control>
             </Field>
 
