@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Columns, Content, Heading } from 'react-bulma-components'
-import { saveHistorial } from '../sevices'
+import { saveHistorial, enviarCorreo } from '../sevices'
 import FormHistorial from './formHistorial';
 import { Modal } from 'react-bulma-components'
 import ButtonHistorial from './ButtonHistorial';
+import EnviarCorreo from './EnviarCorreo';
 
 const ListProduct = ({ products }) => {
 
     const [isModalOpen2, setIsModalOpen2] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
-    const [reloadPage, setReloadPage] = useState(false); // Nuevo estado para recargar la página
+    const [reloadPage, setReloadPage] = useState(false); 
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -37,6 +38,10 @@ const ListProduct = ({ products }) => {
         setIsModalOpen2(false)
     }
 
+    const recivirCorreo = async(correo)=>{
+        enviarCorreo(correo)
+        console.log(correo)
+    }
 
     useEffect(() => {
         if (reloadPage) {
@@ -47,7 +52,7 @@ const ListProduct = ({ products }) => {
 
     return (
         <Columns>
-            {products.map(({ nombre_funcionario, aparato, numero, lugar_donde, fecha_entrega, _id, createdAt }) => (
+            {products.map(({ nombre_funcionario, aparato, numero, lugar_donde, fecha_entrega, _id, createdAt, correo }) => (
                 <Columns.Column size={4} key={_id}>
                     <Card>
                         <Card.Content color='primary'>
@@ -58,6 +63,7 @@ const ListProduct = ({ products }) => {
                                 <p>Fecha de entrega: {formatDate2(fecha_entrega)}</p>
                                 <p>Lugar donde debe estar: {lugar_donde}</p>
                                 <ButtonHistorial onClick={() => handleOpenModal({_id, aparato, createdAt})}/>
+                                <EnviarCorreo onClick={()=>recivirCorreo({correo})} />
                             </Content>
                         </Card.Content>
                     </Card>

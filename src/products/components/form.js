@@ -14,7 +14,8 @@ const Form = ({ handleSubmit }) => {
         aparato: '',
         numero: '',
         lugar_donde: '',
-        fecha_entrega: new Date()
+        fecha_entrega: new Date(),
+        correo: '' 
     })
 
     const [funcionarios, setFuncionarios] = useState([]);
@@ -29,32 +30,42 @@ const Form = ({ handleSubmit }) => {
         }
         fetchFuncionarios();
 
-        async function fetchaparato() {
+        async function fetchAparato() {
             const response = await getAparato();
             if (response.status === 200) {
                 setAparatos(response.data.aparato);
             }
         }
-        fetchaparato();
+        fetchAparato();
     }, []);
 
-
     const handleChange = (event) => {
-        const { name, value } = event.target
-
-        setFormValues({ ...formValues, [name]: value })
-    }
+        const { name, value } = event.target;
+    
+        if (name === 'nombre_funcionario') {
+            // Encuentra el objeto de funcionario correspondiente al valor seleccionado
+            const selectedFuncionario = funcionarios.find(funcionario => 
+                funcionario.nombre_Apellido === value.substring(0, value.lastIndexOf('(')).trim()
+            );
+            // Si se encontró un funcionario correspondiente, extrae su correo electrónico
+            const correo = selectedFuncionario ? selectedFuncionario.correo : '';
+            // Actualiza el estado del formulario con el valor seleccionado y el correo electrónico
+            setFormValues({ ...formValues, [name]: value, correo: correo });
+        } else {
+            setFormValues({ ...formValues, [name]: value });
+        }
+    };
 
     const handleDateChange = (date) => {
         setFormValues({ ...formValues, fecha_entrega: date });
     };
 
     const _handleSubmit = (e) => {
-        e.preventDefault()
-        handleSubmit({ ...formValues })
-        console.log(formValues)
+        e.preventDefault();
+        handleSubmit({ ...formValues });
+        console.log(formValues);
+    };
 
-    }
     return (
         <form onSubmit={_handleSubmit}>
             <Field>
@@ -69,9 +80,22 @@ const Form = ({ handleSubmit }) => {
                     />
                     <datalist id="funcionarios">
                         {funcionarios.map((funcionario, index) => (
-                            <option key={index} value={funcionario.nombre_Apellido + ' ' + '(' + funcionario.cargo + ')'} />
+                            <option key={index} value={funcionario.nombre_Apellido + ' ' + '(' + funcionario.cargo + ')' } />
                         ))}
                     </datalist>
+                </Control>
+            </Field>
+
+            <Field>
+                <Label>correo</Label>
+                <Control>
+                    <Input
+                        placeholder="Correo electrónico"
+                        name="correo"
+                        value={formValues.correo}
+                        onChange={handleChange}
+                        disabled //
+                    />
                 </Control>
             </Field>
 
@@ -96,14 +120,14 @@ const Form = ({ handleSubmit }) => {
             <Field>
                 <Label>numero</Label>
                 <Control>
-                    <Input placeholder="Text Input" name="numero" value={formValues.numero} onChange={handleChange} type="number" />
+                    <Input placeholder="Número" name="numero" value={formValues.numero} onChange={handleChange} type="number" />
                 </Control>
             </Field>
 
             <Field>
                 <Label>lugar_donde</Label>
                 <Control>
-                    <Input placeholder="Text Input" name="lugar_donde" value={formValues.lugar_donde} onChange={handleChange} />
+                    <Input placeholder="Lugar donde" name="lugar_donde" value={formValues.lugar_donde} onChange={handleChange} />
                 </Control>
             </Field>
 

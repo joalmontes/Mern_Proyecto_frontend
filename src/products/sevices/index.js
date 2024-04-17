@@ -19,6 +19,7 @@ export async function saveProduct(productData){
         const formData = new FormData()
 
         formData.append('nombre_funcionario', productData.nombre_funcionario )
+        formData.append('correo', productData.correo)
         formData.append('aparato', productData.aparato )
         formData.append('numero', productData.numero )
         formData.append('lugar_donde', productData.lugar_donde )
@@ -54,6 +55,18 @@ export async function saveAparato(aparatoData){
         throw error; 
     }
 }
+ 
+export async function enviarCorreo(correo){
+    console.log(correo)
+    try {
+        const response = await axios.post(`${baseUrl}/api/sendemail`,correo);
+        return response;
+    } catch (error) {
+        console.error('no se envio el correo a su destinatario', error);
+        throw error; 
+    }
+}
+
 export async function deleteProduct(_id){
     try {
         const response = await axios({
