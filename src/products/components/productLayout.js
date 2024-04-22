@@ -94,7 +94,7 @@ const ProductLayout = () =>{
     }
     return(
         <Container>
-            <Header title="products app"/>
+            <Header title="PRESTAMOS"/>
             
             <div style={{ display: 'flex', gap: '10px' }}>
                 <AddButton onClick={() =>SetIsModalOpen(true)} />
